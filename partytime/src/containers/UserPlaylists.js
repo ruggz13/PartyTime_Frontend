@@ -10,23 +10,34 @@ class UserPlaylists extends React.Component {
     };
   }
 
-  render() {
-    var Spotify = require("spotify-web-api-js");
-    var s = new Spotify();
+  componentDidMount() {
     var spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(`${this.props.user.access_token}`);
+    spotifyApi.setAccessToken(JSON.parse(localStorage.user).access_token);
     spotifyApi
       .getUserPlaylists()
       .then(data => this.setState({ playlists: data.items }), function(err) {
         console.error(err);
       });
+  }
+
+  render() {
+    // var Spotify = require("spotify-web-api-js");
+    // var s = new Spotify();
+
     return (
       <div>
-        <h1>User Playlists:</h1>
+        <h1>DJ's Playlists:</h1>
         <br></br>
         <div className="ui grid">
           {this.state.playlists.map(playlist => {
-            return <UserPlaylist playlist={playlist} key={playlist.id} />;
+            return (
+              <UserPlaylist
+                playlist={playlist}
+                key={playlist.id}
+                access_token={this.props.user.access_token}
+                handlePlaylistClick={this.props.handlePlaylistClick}
+              />
+            );
           })}
         </div>
       </div>

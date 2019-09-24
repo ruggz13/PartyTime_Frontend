@@ -1,10 +1,16 @@
 import React from "react";
-import { Button } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import { Card, Icon } from "semantic-ui-react";
 import UserPlaylists from "../containers/UserPlaylists";
 
 class UserProfile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      selected_playlist: null
+    };
+  }
+
   handleLogOut = () => {
     localStorage.removeItem("user");
     this.props.history.push("/login");
@@ -26,10 +32,14 @@ class UserProfile extends React.Component {
             <Icon name="user" />
             {this.props.user.followers} Followers
           </Card.Content>
+          <button className="ui button" onClick={this.handleLogOut}>
+            Log Out
+          </button>
         </Card>
-        <UserPlaylists user={this.props.user} />
-        <br></br>
-        <Button onClick={this.handleLogOut}>Log Out</Button>
+        <UserPlaylists
+          user={this.props.user}
+          handlePlaylistClick={this.props.handlePlaylistClick}
+        />
       </>
     );
   }
