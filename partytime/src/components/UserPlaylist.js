@@ -1,18 +1,18 @@
 import React from "react";
 import { Card, Image } from "semantic-ui-react";
 import SpotifyWebApi from "spotify-web-api-js";
+import "../UserPlaylist.css";
 
 class UserPlaylist extends React.Component {
-  setSelectedPlaylist = () => {
-    localStorage.setItem("selectedPlaylist", this.props.playlist.uri);
-  };
-
   render() {
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(`${this.props.access_token}`);
 
     return (
-      <div onClick={() => this.props.handlePlaylistClick(this.props.playlist)}>
+      <div
+        className="playlist_card"
+        onClick={() => this.props.handlePlaylistClick(this.props.playlist)}
+      >
         <Card>
           <Card.Content>
             <Card.Header>{this.props.playlist.name}</Card.Header>

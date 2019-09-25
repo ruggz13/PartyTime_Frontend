@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Image } from "semantic-ui-react";
-import { Button } from "reactstrap";
+import "../PlaylistSong.css";
 
 class PlaylistSong extends React.Component {
   render() {
@@ -12,7 +12,7 @@ class PlaylistSong extends React.Component {
     // debugger;
     // console.log(this.props.song.track.album.images[0].url);
     return (
-      <div>
+      <div className="song_card">
         <Card>
           <Card.Content>
             <Card.Header>{this.props.song.track.name}</Card.Header>

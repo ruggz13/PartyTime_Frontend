@@ -1,6 +1,7 @@
 import React from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import UserPlaylist from "../components/UserPlaylist";
+import "../UserPlayLists.css";
 
 class UserPlaylists extends React.Component {
   constructor() {

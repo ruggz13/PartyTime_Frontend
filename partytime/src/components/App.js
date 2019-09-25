@@ -3,7 +3,7 @@ import "../App.css";
 import { Route, Switch, withRouter } from "react-router-dom";
 import UserProfile from "../containers/UserProfile";
 import Login from "./Login";
-import NotFound from "./NotFound";
+// import NotFound from "./NotFound";
 import PlaylistInfo from "./PlaylistInfo";
 import SpotifyPlayer from "react-spotify-web-playback";
 
@@ -12,7 +12,7 @@ function getUrlParams(search) {
   let params = {};
   hashes.map(hash => {
     let [key, val] = hash.split("=");
-    params[key] = decodeURIComponent(val);
+    return (params[key] = decodeURIComponent(val));
   });
   return params;
 }
@@ -22,7 +22,8 @@ class App extends React.Component {
     super();
     this.state = {
       user: {},
-      selectedPlaylist: {}
+      selectedPlaylist: {},
+      test: false
     };
   }
 
@@ -49,39 +50,63 @@ class App extends React.Component {
   }
 
   handlePlaylistClick = playlistObj => {
-    this.setState({ selectedPlaylist: playlistObj });
+    console.log(playlistObj.name, "playlistObj");
+    console.log(this.state.selectedPlaylist.name, "selectedPlaylist");
     this.props.history.push(`/user/playlists/${playlistObj.id}`);
-    localStorage.setItem("selectedPlaylist", playlistObj.uri);
+    this.setState({ test: !this.state.test });
+    this.setState({ selectedPlaylist: { ...playlistObj } });
   };
 
   render() {
+    // console.log(this.state.selectedPlaylist.uri);
     return (
-      <Switch>
+      <>
         <div className="App">
           <header className="App-header">
-            <Route exact path="/login" component={Login} />
-            <Route
-              exact
-              path="/user/playlists/:id"
-              render={() => {
-                let playlistObj = this.state.selectedPlaylist;
-                return <PlaylistInfo playlist={playlistObj} />;
-              }}
-            />
-            <Route
-              exact
-              path="/user/profile"
-              render={() => (
-                <UserProfile
-                  user={this.state.user}
-                  handlePlaylistClick={this.handlePlaylistClick}
-                />
-              )}
-            />
-            {/* <Route component={NotFound} /> */}
+            <Switch>
+              <Route
+                exact
+                path="/login"
+                component={!localStorage.user ? Login : null}
+              />
+              <Route
+                exact
+                path="/user/playlists/:id"
+                render={() => {
+                  let playlistObj = this.state.selectedPlaylist;
+                  return <PlaylistInfo playlist={playlistObj} />;
+                }}
+              />
+              <Route
+                exact
+                path="/user/profile"
+                render={() => (
+                  <UserProfile
+                    user={this.state.user}
+                    handlePlaylistClick={this.handlePlaylistClick}
+                  />
+                )}
+              />
+              {/* <Route component={NotFound} /> */}
+            </Switch>
           </header>
         </div>
-      </Switch>
+        {localStorage.user ? (
+          <SpotifyPlayer
+            token={JSON.parse(localStorage.user).access_token}
+            uris={this.state.selectedPlaylist.uri}
+            styles={{
+              bgColor: "#333",
+              color: "#61dafb",
+              loaderColor: "#fff",
+              sliderColor: "#61dafb",
+              savedColor: "#fff",
+              trackArtistColor: "#ccc",
+              trackNameColor: "#fff"
+            }}
+          />
+        ) : null}
+      </>
     );
   }
 }
