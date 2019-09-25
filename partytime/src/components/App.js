@@ -51,23 +51,11 @@ class App extends React.Component {
   handlePlaylistClick = playlistObj => {
     this.setState({ selectedPlaylist: playlistObj });
     this.props.history.push(`/user/playlists/${playlistObj.id}`);
+    localStorage.setItem("selectedPlaylist", playlistObj.uri);
   };
 
   render() {
     return (
-      // {/* <SpotifyPlayer
-      //     token={JSON.parse(localStorage.user).access_token}
-      //     uris={}
-      //     styles={{
-      //       bgColor: '#333',
-      //       color: '#fff',
-      //       loaderColor: '#fff',
-      //       sliderColor: '#1cb954',
-      //       savedColor: '#fff',
-      //       trackArtistColor: '#ccc',
-      //       trackNameColor: '#fff',
-      //     }}
-      //   /> */}
       <Switch>
         <div className="App">
           <header className="App-header">

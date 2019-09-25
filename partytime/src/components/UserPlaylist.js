@@ -3,6 +3,10 @@ import { Card, Image } from "semantic-ui-react";
 import SpotifyWebApi from "spotify-web-api-js";
 
 class UserPlaylist extends React.Component {
+  setSelectedPlaylist = () => {
+    localStorage.setItem("selectedPlaylist", this.props.playlist.uri);
+  };
+
   render() {
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(`${this.props.access_token}`);
