@@ -23,7 +23,8 @@ class App extends React.Component {
     this.state = {
       user: {},
       selectedPlaylist: {},
-      test: false
+      selectedSong: {},
+      play: false
     };
   }
 
@@ -50,12 +51,15 @@ class App extends React.Component {
   }
 
   handlePlaylistClick = playlistObj => {
-    console.log(playlistObj.name, "playlistObj");
-    console.log(this.state.selectedPlaylist.name, "selectedPlaylist");
+    this.setState(() => ({ selectedPlaylist: playlistObj, play: true }));
     this.props.history.push(`/user/playlists/${playlistObj.id}`);
-    this.setState({ test: !this.state.test });
-    this.setState({ selectedPlaylist: { ...playlistObj } });
+    // this.setState({ selectedPlaylist: playlistObj });
   };
+
+  // handleSongClick = songObj => {
+  //   console.log(songObj)
+  //   this.setState(() => ({ selectedSong: songObj, play: true }));
+  // };
 
   render() {
     // console.log(this.state.selectedPlaylist.uri);
@@ -74,7 +78,12 @@ class App extends React.Component {
                 path="/user/playlists/:id"
                 render={() => {
                   let playlistObj = this.state.selectedPlaylist;
-                  return <PlaylistInfo playlist={playlistObj} />;
+                  return (
+                    <PlaylistInfo
+                      playlist={playlistObj}
+                      handleSongClick={this.handleSongClick}
+                    />
+                  );
                 }}
               />
               <Route
@@ -95,6 +104,8 @@ class App extends React.Component {
           <SpotifyPlayer
             token={JSON.parse(localStorage.user).access_token}
             uris={this.state.selectedPlaylist.uri}
+            autoPlay={true}
+            play={this.state.play}
             styles={{
               bgColor: "#333",
               color: "#61dafb",

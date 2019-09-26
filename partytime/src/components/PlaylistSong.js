@@ -12,7 +12,10 @@ class PlaylistSong extends React.Component {
     // debugger;
     // console.log(this.props.song.track.album.images[0].url);
     return (
-      <div className="song_card">
+      <div
+        className="song_card"
+        // onClick={() => this.props.handleSongClick(this.props.song)}
+      >
         <Card>
           <Card.Content>
             <Card.Header>{this.props.song.track.name}</Card.Header>

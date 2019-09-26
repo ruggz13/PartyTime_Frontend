@@ -36,7 +36,13 @@ class PlaylistInfo extends React.Component {
         <br></br>
         <div className="ui grid">
           {this.state.songs.map(song => {
-            return <PlaylistSong song={song} key={song.track.id} />;
+            return (
+              <PlaylistSong
+                song={song}
+                key={song.track.id}
+                handleSongClick={this.props.handleSongClick}
+              />
+            );
           })}
         </div>
       </div>
