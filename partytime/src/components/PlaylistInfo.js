@@ -21,8 +21,22 @@ class PlaylistInfo extends React.Component {
       });
   }
 
+  //   componentDidUpdate(){
+  //       this.props.getPlaylistSongs(this.state.songs);
+  //   }
+
   handleClick = () => {
     this.props.history.push("/user/profile");
+  };
+
+  getSongUris = () => {
+    let songs = this.state.songs.map(song => song.track.uri);
+    this.props.getPlaylistSongs(songs);
+  };
+
+  checkIfIdIsValid = () => {
+    let validSongs = this.state.songs.filter(song => song.track.id !== null);
+    return validSongs;
   };
 
   render() {
@@ -35,11 +49,12 @@ class PlaylistInfo extends React.Component {
         <br></br>
         <br></br>
         <div className="ui grid">
-          {this.state.songs.map(song => {
+          {this.checkIfIdIsValid().map((song, index) => {
             return (
               <PlaylistSong
                 song={song}
                 key={song.track.id}
+                index={index}
                 handleSongClick={this.props.handleSongClick}
               />
             );

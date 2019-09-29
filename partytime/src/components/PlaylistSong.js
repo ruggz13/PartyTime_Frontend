@@ -12,14 +12,14 @@ class PlaylistSong extends React.Component {
     // debugger;
     // console.log(this.props.song.track.album.images[0].url);
     return (
-      <div
-        className="song_card"
-        // onClick={() => this.props.handleSongClick(this.props.song)}
-      >
+      <div className="song_card">
         <Card>
           <Card.Content>
             <Card.Header>{this.props.song.track.name}</Card.Header>
-            <Image src={image} />
+            <Image
+              src={image}
+              onClick={() => this.props.handleSongClick(this.props.index)}
+            />
             <Card.Meta>
               By:{" "}
               {this.props.song.track.artists.map(artist =>

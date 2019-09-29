@@ -6,6 +6,7 @@ import Login from "./Login";
 // import NotFound from "./NotFound";
 import PlaylistInfo from "./PlaylistInfo";
 import SpotifyPlayer from "react-spotify-web-playback";
+import SpotifyWebApi from "spotify-web-api-js";
 
 function getUrlParams(search) {
   let hashes = search.slice(search.indexOf("?") + 1).split("&");
@@ -23,8 +24,10 @@ class App extends React.Component {
     this.state = {
       user: {},
       selectedPlaylist: {},
-      selectedSong: {},
-      play: false
+      selectedSongUri: null,
+      play: false,
+      playlistSongs: [],
+      offset: 0
     };
   }
 
@@ -51,15 +54,29 @@ class App extends React.Component {
   }
 
   handlePlaylistClick = playlistObj => {
-    this.setState(() => ({ selectedPlaylist: playlistObj, play: true }));
+    this.setState(() => ({ selectedPlaylist: playlistObj }));
     this.props.history.push(`/user/playlists/${playlistObj.id}`);
-    // this.setState({ selectedPlaylist: playlistObj });
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(JSON.parse(localStorage.user).access_token);
+    spotifyApi
+      .getPlaylistTracks(playlistObj.id)
+      .then(data =>
+        this.setState({ playlistSongs: data.items, offset: 0, play: true })
+      );
+    // this.setState({ offset: 0, playlistSongs: });
   };
 
-  // handleSongClick = songObj => {
-  //   console.log(songObj)
-  //   this.setState(() => ({ selectedSong: songObj, play: true }));
-  // };
+  handleSongClick = index => {
+    this.setState({ offset: index });
+  };
+
+  getPlaylistSongUris() {
+    let newPlaylistSongs = this.state.playlistSongs.filter(
+      song => song.track.id !== null
+    );
+    let uris = newPlaylistSongs.map(song => song.track.uri);
+    return uris;
+  }
 
   render() {
     // console.log(this.state.selectedPlaylist.uri);
@@ -81,6 +98,7 @@ class App extends React.Component {
                   return (
                     <PlaylistInfo
                       playlist={playlistObj}
+                      getPlaylistSongs={this.getPlaylistSongs}
                       handleSongClick={this.handleSongClick}
                     />
                   );
@@ -103,9 +121,11 @@ class App extends React.Component {
         {localStorage.user ? (
           <SpotifyPlayer
             token={JSON.parse(localStorage.user).access_token}
-            uris={this.state.selectedPlaylist.uri}
+            uris={this.getPlaylistSongUris()}
             autoPlay={true}
             play={this.state.play}
+            magnifySliderOnHover={true}
+            offset={this.state.offset}
             styles={{
               bgColor: "#333",
               color: "#61dafb",
