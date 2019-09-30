@@ -12,14 +12,36 @@ class UserPlaylists extends React.Component {
   }
 
   componentDidMount() {
+    Promise.all([
+      this.fetchAllSpotifyPlaylists(),
+      this.fetchPartyTimePlaylists()
+    ]).then(
+      data => {
+        console.log(data);
+        this.setState({ playlists: data[0].items });
+      },
+      function(err) {
+        console.error(err);
+      }
+    );
+  }
+
+  //create fetch PartyTime(backend) playlists
+  fetchPartyTimePlaylists = () => {
+    return fetch("http://localhost:3001/playlists", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => res.json());
+  };
+
+  //create fetch for Spotify playlists
+  fetchAllSpotifyPlaylists = () => {
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(JSON.parse(localStorage.user).access_token);
-    spotifyApi
-      .getUserPlaylists()
-      .then(data => this.setState({ playlists: data.items }), function(err) {
-        console.error(err);
-      });
-  }
+    return spotifyApi.getUserPlaylists();
+  };
 
   render() {
     // var Spotify = require("spotify-web-api-js");

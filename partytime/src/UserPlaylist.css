@@ -6,3 +6,7 @@ div.song_card {
   /* height: 380px; */
   padding-top: 1em;
 }
+
+button.ui.button {
+  margin-bottom: 1em !important;
+}

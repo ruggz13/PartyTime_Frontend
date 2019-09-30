@@ -17,6 +17,10 @@ class UserProfile extends React.Component {
     this.props.history.push("/login");
   };
 
+  handleClick = () => {
+    this.props.history.push("/user/events");
+  };
+
   componentDidMount() {}
 
   render() {
@@ -39,6 +43,9 @@ class UserProfile extends React.Component {
             </button>
           </Card>
         </div>
+        <button className="ui button" onClick={this.handleClick}>
+          Events
+        </button>
         <UserPlaylists
           user={this.props.user}
           handlePlaylistClick={this.props.handlePlaylistClick}

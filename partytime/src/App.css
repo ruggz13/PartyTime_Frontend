@@ -3,6 +3,7 @@
 .App {
   text-align: center;
   font-family: "Josefin Sans", sans-serif;
+  margin-bottom: 2em;
 }
 
 .App-header {
@@ -18,4 +19,11 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.musicPlayer {
+  width: 100% !important;
+  bottom: 0 !important;
+  position: fixed !important;
+  padding-top: 1em !important;
 }

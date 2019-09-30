@@ -3,6 +3,7 @@ import "../App.css";
 import { Route, Switch, withRouter } from "react-router-dom";
 import UserProfile from "../containers/UserProfile";
 import Login from "./Login";
+import EventsContainer from "../containers/EventsContainer";
 // import NotFound from "./NotFound";
 import PlaylistInfo from "./PlaylistInfo";
 import SpotifyPlayer from "react-spotify-web-playback";
@@ -106,6 +107,11 @@ class App extends React.Component {
               />
               <Route
                 exact
+                path="/user/events"
+                render={() => <EventsContainer />}
+              />
+              <Route
+                exact
                 path="/user/profile"
                 render={() => (
                   <UserProfile
@@ -118,25 +124,27 @@ class App extends React.Component {
             </Switch>
           </header>
         </div>
-        {localStorage.user ? (
-          <SpotifyPlayer
-            token={JSON.parse(localStorage.user).access_token}
-            uris={this.getPlaylistSongUris()}
-            autoPlay={true}
-            play={this.state.play}
-            magnifySliderOnHover={true}
-            offset={this.state.offset}
-            styles={{
-              bgColor: "#333",
-              color: "#61dafb",
-              loaderColor: "#fff",
-              sliderColor: "#61dafb",
-              savedColor: "#fff",
-              trackArtistColor: "#ccc",
-              trackNameColor: "#fff"
-            }}
-          />
-        ) : null}
+        <div className="musicPlayer">
+          {localStorage.user ? (
+            <SpotifyPlayer
+              token={JSON.parse(localStorage.user).access_token}
+              uris={this.getPlaylistSongUris()}
+              autoPlay={true}
+              play={this.state.play}
+              magnifySliderOnHover={true}
+              offset={this.state.offset}
+              styles={{
+                bgColor: "#333",
+                color: "#61dafb",
+                loaderColor: "#fff",
+                sliderColor: "#61dafb",
+                savedColor: "#fff",
+                trackArtistColor: "#ccc",
+                trackNameColor: "#fff"
+              }}
+            />
+          ) : null}
+        </div>
       </>
     );
   }
