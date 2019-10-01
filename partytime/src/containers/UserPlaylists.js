@@ -18,7 +18,22 @@ class UserPlaylists extends React.Component {
     ]).then(
       data => {
         console.log(data);
-        this.setState({ playlists: data[0].items });
+        // this.setState({ playlists: data[0].items });
+        // iterate through the spotify playists
+        // map spotify playlist => backend_playlist.spotify_id === spotify.id  ? spotify_playlist : null
+        let playlistsArray = data[0].items.map(spotifyPlaylist => {
+          let searchedPlaylist = data[1].find(
+            partyPlaylist => partyPlaylist.spotify_id === spotifyPlaylist.id
+          );
+          if (!!searchedPlaylist) {
+            spotifyPlaylist.partyPlaylistId = searchedPlaylist.id;
+            return spotifyPlaylist;
+          } else {
+            spotifyPlaylist.partyPlaylistId = null;
+            return spotifyPlaylist;
+          }
+        });
+        this.setState({ playlists: playlistsArray });
       },
       function(err) {
         console.error(err);

@@ -11,19 +11,22 @@ class UserPlaylist extends React.Component {
     const venue_name = target.venue.value;
     const host_name = target.host.value;
     let playlist = this.props.playlist;
-    // let data = {
-    //   name: event_name,
-    //   venue: venue_name,
-    //   host: host_name,
-    //   playlist_id: playlist.id
-    // };
-    // fetch("http://localhost:3001/events", {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // }).then(data => console.log(data));
+    let data = {
+      name: event_name,
+      venue: venue_name,
+      host: host_name,
+      spotify_id: playlist.id,
+      user_id: JSON.parse(localStorage.user).id,
+      title: playlist.name
+    };
+    debugger;
+    fetch("http://localhost:3001/events", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(data => console.log(data));
   };
 
   render() {
