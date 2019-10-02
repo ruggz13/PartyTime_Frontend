@@ -49,6 +49,7 @@ class UserProfile extends React.Component {
         <UserPlaylists
           user={this.props.user}
           handlePlaylistClick={this.props.handlePlaylistClick}
+          getEvents={this.props.getEvents}
         />
       </>
     );

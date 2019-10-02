@@ -28,7 +28,8 @@ class App extends React.Component {
       selectedSongUri: null,
       play: false,
       playlistSongs: [],
-      offset: 0
+      offset: 0,
+      events: []
     };
   }
 
@@ -79,6 +80,10 @@ class App extends React.Component {
     return uris;
   }
 
+  getEvents = eventObj => {
+    this.setState({ events: [...this.state.events, eventObj] });
+  };
+
   render() {
     // console.log(this.state.selectedPlaylist.uri);
     return (
@@ -108,7 +113,7 @@ class App extends React.Component {
               <Route
                 exact
                 path="/user/events"
-                render={() => <EventsContainer />}
+                render={() => <EventsContainer newEvents={this.state.events} />}
               />
               <Route
                 exact
@@ -117,6 +122,7 @@ class App extends React.Component {
                   <UserProfile
                     user={this.state.user}
                     handlePlaylistClick={this.handlePlaylistClick}
+                    getEvents={this.getEvents}
                   />
                 )}
               />

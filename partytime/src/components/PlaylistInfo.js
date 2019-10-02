@@ -28,7 +28,7 @@ class PlaylistInfo extends React.Component {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(data => console.log(data));
+    });
   }
 
   //   componentDidUpdate(){

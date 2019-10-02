@@ -17,7 +17,6 @@ class UserPlaylists extends React.Component {
       this.fetchPartyTimePlaylists()
     ]).then(
       data => {
-        console.log(data);
         // this.setState({ playlists: data[0].items });
         // iterate through the spotify playists
         // map spotify playlist => backend_playlist.spotify_id === spotify.id  ? spotify_playlist : null
@@ -74,6 +73,7 @@ class UserPlaylists extends React.Component {
                 key={playlist.id}
                 access_token={this.props.user.access_token}
                 handlePlaylistClick={this.props.handlePlaylistClick}
+                getEvents={this.props.getEvents}
               />
             );
           })}

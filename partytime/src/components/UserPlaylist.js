@@ -26,7 +26,11 @@ class UserPlaylist extends React.Component {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(data => console.log(data));
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => this.props.getEvents(data));
   };
 
   render() {
