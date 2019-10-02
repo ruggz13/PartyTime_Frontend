@@ -3,6 +3,16 @@ import { Card, Image } from "semantic-ui-react";
 import "../PlaylistSong.css";
 
 class PlaylistSong extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      vote_count: 0
+    };
+  }
+
+  increaseVote = () => {
+    this.setState({ vote_count: this.state.vote_count + 1 });
+  };
   render() {
     let image =
       this.props.song.track.album.images[0] === undefined
@@ -26,8 +36,11 @@ class PlaylistSong extends React.Component {
                 artist.name.concat(" ")
               )}
             </Card.Meta>
+            <Card.Description>Votes: {this.state.vote_count}</Card.Description>
           </Card.Content>
-          <button className="ui button">Vote!</button>
+          <button className="ui button" onClick={this.increaseVote}>
+            Vote!
+          </button>
         </Card>
       </div>
     );
