@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Icon } from "semantic-ui-react";
-import UserPlaylists from "../containers/UserPlaylists";
+import UserPlaylists from "./UserPlaylists";
 import "../UserProfile.css";
 
 class UserProfile extends React.Component {
