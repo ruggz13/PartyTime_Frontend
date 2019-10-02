@@ -19,7 +19,6 @@ class UserPlaylist extends React.Component {
       user_id: JSON.parse(localStorage.user).id,
       title: playlist.name
     };
-    debugger;
     fetch("http://localhost:3001/events", {
       method: "POST",
       body: JSON.stringify(data),

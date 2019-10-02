@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Event from "../components/Event";
+import "../EventContainer.css";
 
 class EventsContainer extends React.Component {
   constructor() {
@@ -34,7 +35,7 @@ class EventsContainer extends React.Component {
         <button className="ui button" onClick={this.handleClick}>
           Home
         </button>
-        <h1>Events</h1>
+        <h1 className="eventTitle">Events</h1>
         <div className="ui grid">
           {this.state.events.map(event => {
             return <Event event={event} key={event.id} />;
