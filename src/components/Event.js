@@ -10,6 +10,9 @@ class Event extends React.Component {
           <Card.Content>
             <Card.Header>Event: {this.props.event.name}</Card.Header>
             <Card.Header>DJ: {this.props.event.host}</Card.Header>
+            <Card.Header>
+              Playlist: {this.props.event.playlist.title}
+            </Card.Header>
             <Card.Meta>Location: {this.props.event.venue}</Card.Meta>
           </Card.Content>
         </Card>
