@@ -27,10 +27,7 @@ class EventsContainer extends React.Component {
       body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ events: data });
-      });
+      .then(data => this.setState({ events: data }));
   }
   render() {
     return (
